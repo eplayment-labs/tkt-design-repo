@@ -1,0 +1,254 @@
+@import "tailwindcss";
+@import "../styles/tokens.css";
+
+@theme inline {
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-surface-sunken: var(--surface-sunken);
+  --color-border-subtle: var(--border-subtle);
+  --color-border-default: var(--border-default);
+  --color-border-strong: var(--border-strong);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-tertiary: var(--text-tertiary);
+  --color-text-disabled: var(--text-disabled);
+  --color-accent: var(--accent);
+  --color-event: var(--event-accent);
+  --color-event-text: var(--event-accent-text);
+  --color-success: var(--success-text);
+  --color-warning: var(--warning-text);
+  --color-danger: var(--danger-text);
+  --color-success-subtle: var(--success-subtle);
+  --color-warning-subtle: var(--warning-subtle);
+  --color-danger-subtle: var(--danger-subtle);
+  --font-sans: var(--font-sans);
+  --font-display: var(--font-display);
+  --font-mono: var(--font-mono);
+  --radius-sm: var(--radius-sm);
+  --radius-lg: var(--radius-lg);
+  --radius-inner: var(--radius-inner);
+  --radius-pill: var(--radius-pill);
+}
+
+@layer base {
+  *,
+  ::before,
+  ::after {
+    border-color: var(--border-default);
+  }
+}
+
+html {
+  color-scheme: light;
+  -webkit-text-size-adjust: 100%;
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+body {
+  background: var(--surface);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+}
+
+/* Custom utilities live in the components layer so Tailwind utilities
+   (max-w-*, px-*, etc.) can still override them on the same element. */
+@layer components {
+/* Tabular figures for every price, count, time, and timer. */
+.num {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.display {
+  font-size: var(--text-display);
+  line-height: var(--leading-display);
+  letter-spacing: var(--tracking-display);
+  font-weight: var(--weight-display);
+  font-family: var(--font-display);
+  text-wrap: balance;
+}
+
+h1, h2, h3, .font-display {
+  font-family: var(--font-display);
+}
+
+/* ---------- Soft pop (DESIGN_PLAN §0) ---------- */
+
+/* Photo tint: a surface colored by the event's own accent. */
+.tint {
+  background-color: color-mix(in oklab, var(--event-accent) var(--tint), var(--surface-raised));
+}
+
+/* Card: rounded tinted frame with the photo inset (concentric corners). */
+.card {
+  display: flex;
+  flex-direction: column;
+  padding: var(--card-inset);
+  border-radius: var(--radius-lg);
+  color: inherit;
+  text-decoration: none;
+  transition: background-color var(--duration-fast) var(--ease-out);
+}
+
+.card-photo {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-inner);
+  background: var(--surface-sunken);
+}
+
+/* Sticker: a small white badge, tilted, on a photo corner. Max one per card. */
+.sticker {
+  position: absolute;
+  z-index: 1;
+  top: var(--space-3);
+  left: var(--space-3);
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-sm);
+  background: var(--gray-0);
+  color: var(--gray-ink);
+  transform: rotate(var(--sticker-tilt));
+  font-size: var(--text-xs);
+  font-weight: 700;
+  line-height: 1.1;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.sticker b {
+  font-size: var(--text-2xl);
+  letter-spacing: -0.02em;
+}
+
+/* Photo glow: blurred cover behind the event hero and full-screen QR only. */
+.glow {
+  position: absolute;
+  inset: -10%;
+  z-index: -1;
+  filter: blur(var(--glow-blur)) saturate(1.3);
+  opacity: var(--glow-opacity);
+  pointer-events: none;
+}
+
+/* Bento grid: 2 cols on phone, 4 from tablet; .bento-feature spans 2×2. */
+.bento {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+@media (min-width: 768px) {
+  .bento {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-6);
+  }
+}
+
+.bento-feature {
+  grid-column: span 2;
+}
+
+@media (min-width: 768px) {
+  .bento-feature {
+    grid-row: span 2;
+  }
+}
+
+.label {
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: var(--tracking-label);
+  color: var(--text-tertiary);
+}
+
+.gutter {
+  padding-inline: var(--gutter);
+}
+
+.content {
+  width: 100%;
+  max-width: var(--content-max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* Per-event photo accent: six precomputed values ride in as inline vars
+   (--ea-l, --eat-l, --eon-l and the -d set); the theme picks a set. */
+.event-scope {
+  --event-accent: var(--ea-l, var(--accent));
+  --event-accent-text: var(--eat-l, var(--text-primary));
+  --event-on-accent: var(--eon-l, var(--text-on-accent));
+}
+
+[data-theme="dark"] .event-scope,
+.event-scope[data-theme="dark"] {
+  --event-accent: var(--ea-d, var(--accent));
+  --event-accent-text: var(--eat-d, var(--text-primary));
+  --event-on-accent: var(--eon-d, var(--text-on-accent));
+}
+
+/* Hide horizontal scrollbars on chip rows and gallery strips (still
+   scrollable by touch, trackpad, and keyboard). */
+.scroll-x {
+  overflow-x: auto;
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+}
+
+.scroll-x::-webkit-scrollbar {
+  display: none;
+}
+
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+}
+
+/* Library motion overrides (DESIGN_PLAN §8): vaul defaults to 500ms on a
+   springy curve, sonner to 400ms. Both brought into the token range. */
+[data-vaul-drawer],
+[data-vaul-overlay] {
+  transition-duration: var(--duration-normal) !important;
+  transition-timing-function: var(--ease-out) !important;
+  animation-duration: var(--duration-normal) !important;
+  animation-timing-function: var(--ease-out) !important;
+}
+
+[data-sonner-toast] {
+  transition-duration: var(--duration-normal) !important;
+  transition-timing-function: var(--ease-out) !important;
+}
+
+:focus-visible {
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-ring-offset);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Marquee (adapted from Magic UI, MIT). Paused for reduced motion. */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(-100% - var(--gap))); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee { animation: none !important; }
+}

@@ -1,0 +1,49 @@
+{
+  "name": "tkt-design-repo",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit",
+    "accents": "node scripts/accents.ts"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^5.9.1",
+    "@number-flow/react": "^0.6.2",
+    "cmdk": "^1.1.1",
+    "culori": "^4.0.2",
+    "date-fns": "^4.4.0",
+    "date-fns-tz": "^3.2.0",
+    "embla-carousel-autoplay": "^8.6.0",
+    "embla-carousel-react": "^8.6.0",
+    "fast-average-color": "^9.6.0",
+    "html5-qrcode": "^2.3.8",
+    "lucide-react": "^1.52.0",
+    "motion": "^14.0.0",
+    "next": "^16.3.5",
+    "qrcode.react": "^4.2.0",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "react-hook-form": "^7.89.0",
+    "recharts": "^3.10.1",
+    "sonner": "^2.0.8",
+    "vaul": "^1.1.2",
+    "zod": "^4.6.5",
+    "zustand": "^5.0.15"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
+    "@types/culori": "^4.0.1",
+    "@types/node": "^26.6.4",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "^16.3.5",
+    "fast-average-color-node": "^4.0.0",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^6.0.3"
+  }
+}

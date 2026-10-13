@@ -1,0 +1,126 @@
+/* Layered so Tailwind utilities (hidden, lg:flex, w-*) can override. */
+@layer components {
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  border-radius: var(--radius-pill);
+  border: 1px solid transparent;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    background-color var(--duration-fast) var(--ease-out),
+    border-color var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out),
+    opacity var(--duration-fast) var(--ease-out);
+}
+
+.button:disabled,
+.button[aria-disabled="true"] {
+  cursor: not-allowed;
+}
+
+.primary {
+  background: var(--accent);
+  color: var(--text-on-accent);
+}
+
+.primary:hover:not(:disabled) {
+  background: var(--accent-hover);
+}
+
+/* The per-event photo accent. Only inside .event-scope. */
+.event {
+  background: var(--event-accent);
+  color: var(--event-on-accent);
+}
+
+.event:hover:not(:disabled) {
+  background: color-mix(in oklab, var(--event-accent) 88%, var(--text-primary));
+}
+
+.primary:disabled,
+.event:disabled,
+.danger:disabled {
+  background: var(--surface-sunken);
+  color: var(--text-tertiary);
+}
+
+.secondary {
+  background: var(--surface-raised);
+  border-color: var(--border-subtle);
+  color: var(--text-primary);
+}
+
+.secondary:hover:not(:disabled) {
+  border-color: var(--border-strong);
+}
+
+.secondary:disabled {
+  color: var(--text-disabled);
+}
+
+.ghost {
+  background: transparent;
+  color: var(--text-primary);
+}
+
+.ghost:hover:not(:disabled) {
+  background: var(--surface-sunken);
+}
+
+.ghost:disabled {
+  color: var(--text-disabled);
+}
+
+.danger {
+  background: var(--danger);
+  color: var(--gray-0);
+}
+
+.danger:hover:not(:disabled) {
+  background: color-mix(in oklab, var(--danger) 88%, black);
+}
+
+/* Heights: 36 / 44 / 52. 44 is the touch minimum. */
+.sm {
+  min-height: 2.25rem;
+  padding: 0 var(--space-3);
+  font-size: var(--text-sm);
+}
+
+.md {
+  min-height: 2.75rem;
+  padding: 0 var(--space-4);
+  font-size: var(--text-sm);
+}
+
+.lg {
+  min-height: 3.25rem;
+  padding: 0 var(--space-8);
+  font-size: var(--text-base);
+}
+
+.iconOnly {
+  padding: 0;
+  aspect-ratio: 1;
+}
+
+.full {
+  width: 100%;
+}
+
+.spinner {
+  animation: spin 600ms linear infinite;
+}
+
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -1,0 +1,211 @@
+/*
+ * Token foundation — the only file a rebrand touches.
+ *
+ * Forked from ep-design-repo-kit v0.1.0 and retuned per docs/DESIGN_PLAN.md:
+ * warm neutral ramp, two radii, 150–250ms motion, one overlay shadow,
+ * text-safe semantic steps per theme.
+ *
+ * Layers:
+ *   1. Primitives — raw values, no meaning
+ *   2. Semantic   — meaning attached, theme-aware
+ *   3. Tailwind aliases live in app/globals.css (@theme inline)
+ */
+
+:root {
+  /* ---------- 1. Primitives ---------- */
+  /* Neutral ramp (v5 Showcase): white-first, true grays. */
+  --gray-0: #ffffff;
+  --gray-50: #fafafa;
+  --gray-100: #f4f4f5;
+  --gray-200: #e4e4e7;
+  --gray-300: #d4d4d8;
+  --gray-400: #a1a1aa;
+  --gray-500: #8a8a93;
+  --gray-600: #63636b;
+  --gray-700: #46464d;
+  --gray-800: #27272a;
+  --gray-900: #18181b;
+  --gray-950: #111113;
+  --gray-1000: #09090b;
+  --gray-ink: #0a0a0b;
+  --gray-paper: #fafafa;
+
+  /* Brand accent — monochrome until a brand exists. 500/600 light pair
+     (must clear white text), 300/400 dark pair (must clear dark text). */
+  --accent-300: #ffffff;
+  --accent-400: #e4e6e9;
+  --accent-500: #0a0a0b;
+  --accent-600: #000000;
+
+  --success-500: #2f9e44;
+  --warning-500: #f08c00;
+  --danger-500: #e03131;
+
+  /* Brand slot */
+  --brand-name: "Tickets";
+
+  /* Typography */
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  /* Display face for headlines only: personality without hurting legibility. */
+  --font-display: var(--font-bricolage), var(--font-sans);
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-2xl: 1.5rem;
+  --text-4xl: 2.25rem;
+  --text-display: clamp(2.75rem, 6vw, 4.75rem);
+
+  --leading-display: 1.08;
+  --leading-tight: 1.2;
+  --leading-normal: 1.5;
+  --tracking-display: -0.035em;
+  --weight-display: 800;
+  --tracking-label: 0.02em;
+
+  /* Spacing (4px base) */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-24: 6rem;
+  --space-32: 8rem;
+
+  /* Fixed dimensions */
+  --bar-height: 3.5rem;
+  --rail-width: 15rem;
+  /* Full width, capped for ultra-wide screens. Reading pages cap themselves (--read-max). */
+  --content-max: 120rem;
+  --read-max: 90rem;
+  --form-max: 35rem;
+  --gutter: var(--space-4);
+
+  /* Radius (Soft pop, DESIGN_PLAN §0): sm for inputs and small tiles,
+     lg for cards/panels/tickets/sheets, inner for photos inset 6px in a
+     card (concentric with lg), pill for buttons/chips/tabs/badges. */
+  --radius-sm: 10px;
+  --radius-inner: 12px;
+  --radius-lg: 16px;
+  --radius-pill: 999px;
+  --card-inset: 0px;
+  --radius-md: var(--radius-sm);
+  --radius-xl: var(--radius-lg);
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.2, 0, 0, 1);
+  --ease-standard: var(--ease-out);
+  --duration-fast: 150ms;
+  --duration-normal: 200ms;
+  --duration-slow: 250ms;
+  --duration-instant: var(--duration-fast);
+
+  --focus-ring-width: 2px;
+  --focus-ring-offset: 2px;
+  --focus-ring-color: var(--accent);
+
+  /* ---------- 2. Semantic (light) ---------- */
+  --surface: var(--gray-0);
+  --surface-raised: var(--gray-0);
+  --surface-sunken: var(--gray-100);
+  --surface-overlay: rgba(10, 11, 12, 0.5);
+
+  --border-subtle: rgba(10, 10, 11, 0.07);
+  --border-default: rgba(10, 10, 11, 0.12);
+  --border-strong: rgba(10, 10, 11, 0.24);
+
+  --text-primary: var(--gray-ink);
+  --text-secondary: var(--gray-700);
+  --text-tertiary: var(--gray-600);
+  --text-disabled: var(--gray-400);
+  --text-on-accent: var(--gray-0);
+
+  --accent: var(--accent-500);
+  --accent-hover: var(--accent-600);
+  --accent-subtle: var(--gray-100);
+
+  --success: var(--success-500);
+  --warning: var(--warning-500);
+  --danger: var(--danger-500);
+  --success-text: #237a35;
+  --warning-text: #a35f00;
+  --danger-text: #c02424;
+  --success-subtle: #ebfbee;
+  --warning-subtle: #fff4e6;
+  --danger-subtle: #fff0f0;
+
+  /* One shadow, for exactly: event info panel, ticket, sheets, cmdk. */
+  /* One soft shadow for floating things only (DESIGN_PLAN §0). */
+  --shadow-overlay: 0 12px 32px rgba(10, 10, 11, 0.12), 0 1px 2px rgba(10, 10, 11, 0.06);
+
+  /* Photo tint strength for cards and chips, and the hero glow. */
+  --tint: 8%;
+  --glow-blur: 48px;
+  --glow-opacity: 0.35;
+  --sticker-tilt: -6deg;
+
+  --chart-line: var(--text-primary);
+  --chart-grid: var(--border-subtle);
+  --chart-axis: var(--text-tertiary);
+
+  /* Photo accent defaults — overwritten per event by inline vars. */
+  --event-accent: var(--accent);
+  --event-accent-text: var(--text-primary);
+  --event-on-accent: var(--text-on-accent);
+}
+
+@media (min-width: 768px) {
+  :root {
+    --gutter: var(--space-6);
+  }
+}
+
+@media (min-width: 1280px) {
+  :root {
+    --gutter: var(--space-12);
+  }
+}
+
+@media (min-width: 1536px) {
+  :root {
+    --gutter: var(--space-16);
+  }
+}
+
+/* ---------- Dark ---------- */
+[data-theme="dark"] {
+  --surface: var(--gray-1000);
+  --surface-raised: var(--gray-950);
+  --surface-sunken: var(--gray-900);
+  --surface-overlay: rgba(0, 0, 0, 0.6);
+
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-default: rgba(255, 255, 255, 0.14);
+  --border-strong: rgba(255, 255, 255, 0.24);
+
+  --text-primary: var(--gray-paper);
+  --text-secondary: var(--gray-300);
+  --text-tertiary: var(--gray-400);
+  --text-disabled: var(--gray-700);
+  --text-on-accent: var(--gray-950);
+
+  --accent: var(--accent-400);
+  --accent-hover: var(--accent-300);
+  --accent-subtle: var(--gray-800);
+
+  --success-text: #69db7c;
+  --warning-text: #ffa94d;
+  --danger-text: #ff8787;
+  --success-subtle: #132a1a;
+  --warning-subtle: #2b1d0a;
+  --danger-subtle: #2c1618;
+
+  --shadow-overlay: 0 12px 32px rgba(0, 0, 0, 0.55), 0 1px 2px rgba(0, 0, 0, 0.4);
+  --tint: 12%;
+  --glow-opacity: 0.45;
+}
